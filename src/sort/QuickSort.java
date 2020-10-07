@@ -9,9 +9,9 @@ public class QuickSort {
         QuickSort.quickSort(arr, 0, arr.length - 1);
         System.out.println(arr);
     }
-    public static void quickSort(int[] arr, int upper, int lower) {
-        int left = upper;
-        int right = lower;
+    public static void quickSort(int[] arr, int lower, int upper) {
+        int left = lower;
+        int right = upper;
         int mid = left + (right - left) / 2;
         // 中轴
         int pivot = arr[mid];
@@ -31,12 +31,12 @@ public class QuickSort {
             if(left >= right) {
                 break;
             }
-
-            // 交换
+            // 不满足则进行交换
             temp = arr[left];
             arr[left] = arr[right];
             arr[right] = temp;
 
+            // 如果交换完后
             if(arr[left] == pivot) {
                 right--;
             }
@@ -44,15 +44,18 @@ public class QuickSort {
                 left++;
             }
         }
+
+        //left==right时候，需要错开防止栈溢出
         if(left == right) {
             left++;
             right--;
-
         }
-        if(left < right) {
 
+        if(lower < right) {
+            quickSort(arr, lower, right);
         }
-        quickSort(arr, 0, mid - 1);
-        quickSort(arr, mid + 1, arr.length - 1);
+        if(upper > left) {
+            quickSort(arr, left, upper);
+        }
     }
 }
